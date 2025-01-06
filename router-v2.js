@@ -3,7 +3,7 @@ const loadContent = (route) => {
   content.innerHTML = "<p>Loading...</p>";
 
   const script = document.createElement('script');
-  script.src = `pages/${route}.js`;
+  script.src = route;
 
   script.onload = () => {};
   script.onerror = () => {
@@ -14,14 +14,15 @@ const loadContent = (route) => {
 };
 
 const router = () => {
-  const path = window.location.hash.substring(1) || 'home';
+  const path = window.location.hash.substring(1) || '/pages/home.js';
   loadContent(path);
 };
 
 document.querySelectorAll('a[data-link]').forEach(link => {
   link.addEventListener('click', (e) => {
     e.preventDefault();
-    window.location.hash = link.getAttribute('href').substring(1);
+    const route = link.getAttribute('href').substring(1);
+    window.location.hash = route;
     router();
   });
 });
